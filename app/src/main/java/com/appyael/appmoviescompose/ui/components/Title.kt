@@ -13,7 +13,8 @@ import com.appyael.appmoviescompose.ui.theme.primary
 
 @Composable
 fun Title(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    title:String = "Bienvenido"
 ) {
     Text(
         modifier = modifier
@@ -23,7 +24,7 @@ fun Title(
                 start = 24.dp,
                 end = 24.dp
             ),
-        text = "Bienvenido",
+        text = title,
         fontSize = 18.sp,
         fontWeight = FontWeight.SemiBold,
         color = primary

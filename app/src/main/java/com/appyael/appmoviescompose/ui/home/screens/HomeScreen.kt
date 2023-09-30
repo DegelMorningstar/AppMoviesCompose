@@ -39,8 +39,12 @@ private fun HomeSreenMainContent(
         Title()
         SearchField(
             value = "",
-            onValueChange = {},
-            onSearchClick = {}
+            onValueChange = { value:String ->
+
+            },
+            onSearchClick = {
+
+            }
         )
         LazyColumn(
             modifier = modifier

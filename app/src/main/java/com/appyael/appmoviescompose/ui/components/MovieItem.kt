@@ -145,7 +145,7 @@ fun MovieItemPreview() {
             1,
             "",
             "",
-            "Este es un titulo",
+            "Este es un titulo muy largo que se pasa del ancho esperado pero si hay peliculas que tienen textos asi de largos",
             "",
             8.5f,
             10,

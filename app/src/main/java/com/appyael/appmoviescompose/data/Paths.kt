@@ -11,6 +11,8 @@ object Paths {
     const val NOW_PLAYING = "movie/now_playing"
     const val DETAIL_MOVIE = "movie/{idMovie}"
 
+    const val LANGUAGE = "?language=es-ES"
+
     const val api_key = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZTE0OWQ3YjBlNDc5YTE2OTkxZDIzMjQ4OTMxZjQ2YyIsInN1YiI6IjY0MzVjYzE5OWFjNTM1MDA5ZDM3YzI4ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5ZQ8eU27T0NSDvKT5HbA97roRNXYDsb30M84DNyMy3Y"
 
 }
