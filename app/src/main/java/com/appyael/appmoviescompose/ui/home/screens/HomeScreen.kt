@@ -8,11 +8,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.appyael.appmoviescompose.domain.models.Movie
+import com.appyael.appmoviescompose.domain.viewmodels.HomeViewModel
 import com.appyael.appmoviescompose.ui.components.MovieItem
 import com.appyael.appmoviescompose.ui.components.SearchField
 import com.appyael.appmoviescompose.ui.components.Title
@@ -21,15 +25,30 @@ import com.appyael.appmoviescompose.ui.theme.MoviesAppTheme
 import com.appyael.appmoviescompose.ui.theme.background
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    homeViewModel: HomeViewModel
+) {
 
-    HomeSreenMainContent()
+    val topRatedMovieList : List<Movie> by homeViewModel.topRatedMovieList.observeAsState(initial = emptyList())
+    val nowPlayingMovieList : List<Movie> by homeViewModel.nowPlayingMovieList.observeAsState(initial = emptyList())
+
+    LaunchedEffect(true){
+        homeViewModel.topRatedMovies()
+        homeViewModel.nowPlayingMovies()
+    }
+
+    HomeScreenMainContent(
+        topRatedMovieList = topRatedMovieList,
+        nowPlayingMovieList = nowPlayingMovieList
+    )
 
 }
 
 @Composable
-private fun HomeSreenMainContent(
-    modifier: Modifier = Modifier
+private fun HomeScreenMainContent(
+    modifier: Modifier = Modifier,
+    topRatedMovieList:List<Movie>,
+    nowPlayingMovieList:List<Movie>
 ) {
     Column(
         modifier = modifier
@@ -55,24 +74,18 @@ private fun HomeSreenMainContent(
             }
             item {
                 LazyRow(){
-                    //TODO fill items
-                    item {
-                        MovieItem(movie = Movie(
-                            "",
-                            false,
-                            "",
-                            "",
-                            emptyList(),
-                            1,
-                            "",
-                            "",
-                            "Este es un titulo",
-                            "",
-                            8.5f,
-                            10,
-                            false,
-                            8.7f
-                        ), onClickMovie = {})
+                    items(topRatedMovieList){movie:Movie ->
+                        MovieItem(movie = movie, onClickMovie = {})
+                    }
+                }
+            }
+            item {
+                TitleSection(title="Pelicuas en cartelera")
+            }
+            item {
+                LazyRow(){
+                    items(nowPlayingMovieList){movie:Movie ->
+                        MovieItem(movie = movie, onClickMovie = {})
                     }
                 }
             }
@@ -85,7 +98,24 @@ private fun HomeSreenMainContent(
 @Preview(showBackground = true, showSystemUi = true, device = Devices.PIXEL_4)
 @Composable
 fun HomeScreenMainContenPreview() {
+    /*MovieItem(movie = Movie(
+        "",
+        false,
+        "",
+        "",
+        emptyList(),
+        1,
+        "",
+        "",
+        "Este es un titulo",
+        "",
+        8.5f,
+        10,
+        false,
+        8.7f
+    ), onClickMovie = {})
+     */
     MoviesAppTheme {
-        HomeSreenMainContent()
+        HomeScreenMainContent(topRatedMovieList = emptyList<Movie>(), nowPlayingMovieList = emptyList<Movie>())
     }
 }

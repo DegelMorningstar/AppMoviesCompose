@@ -23,12 +23,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import coil.size.Size
 import com.appyael.appmoviescompose.R
+import com.appyael.appmoviescompose.data.Paths
 import com.appyael.appmoviescompose.domain.models.Movie
 import com.appyael.appmoviescompose.ui.theme.background
 import com.appyael.appmoviescompose.ui.theme.white
@@ -55,7 +61,7 @@ fun MovieItem(
     ) {
         Column {
             //Image
-            MovieImage(stars = movie.vote_average.toString())
+            MovieImage(stars = movie.vote_average.toString(), posterPath = movie.poster_path ?: "")
             //Title
             Row {
                 MovieTitle(title = movie.title)
@@ -68,8 +74,16 @@ fun MovieItem(
 @Composable
 private fun MovieImage(
     modifier: Modifier = Modifier,
-    stars: String
+    stars: String,
+    posterPath:String
 ) {
+    val painter = rememberAsyncImagePainter(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(Paths.BASE_IMAGE_URL+posterPath)
+            .size(Size.ORIGINAL)
+            .crossfade(true)
+            .build()
+    )
     Box(
         modifier = modifier
     ) {
@@ -79,7 +93,7 @@ private fun MovieImage(
                 .height(260.dp)
                 .clip(RoundedCornerShape(22.dp))
                 .align(Alignment.Center),
-            painter = painterResource(id = R.drawable.test_movie_card),
+            painter = painter,
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
@@ -128,7 +142,9 @@ private fun MovieTitle(
         color = Color.White,
         fontSize = 12.sp,
         fontWeight = FontWeight.SemiBold,
-        modifier = modifier.padding(12.dp)
+        modifier = modifier.padding(12.dp),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
     )
 }
 
