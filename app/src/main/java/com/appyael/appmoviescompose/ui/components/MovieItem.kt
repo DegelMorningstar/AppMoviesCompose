@@ -44,14 +44,14 @@ import com.appyael.appmoviescompose.ui.theme.white
 fun MovieItem(
     modifier: Modifier = Modifier,
     movie:Movie,
-    onClickMovie: (Movie) -> Unit
+    onClickMovie: (Int) -> Unit
 ) {
     Card(
         modifier = modifier
             .wrapContentHeight()
             .width(206.dp)
             .padding(end = 24.dp),
-        onClick = { onClickMovie(movie) },
+        onClick = { onClickMovie(movie.id) },
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 0.dp),
         border = CardDefaults.outlinedCardBorder(enabled = false),
         shape = RoundedCornerShape(10.dp),
@@ -69,83 +69,6 @@ fun MovieItem(
         }
         
     }
-}
-
-@Composable
-private fun MovieImage(
-    modifier: Modifier = Modifier,
-    stars: String,
-    posterPath:String
-) {
-    val painter = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(Paths.BASE_IMAGE_URL+posterPath)
-            .size(Size.ORIGINAL)
-            .crossfade(true)
-            .build()
-    )
-    Box(
-        modifier = modifier
-    ) {
-        Image(
-            modifier = modifier
-                .width(206.dp)
-                .height(260.dp)
-                .clip(RoundedCornerShape(22.dp))
-                .align(Alignment.Center),
-            painter = painter,
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
-        Box(
-            modifier = modifier
-                .padding(
-                    top = 24.dp,
-                    start = 12.dp
-                )
-                .align(Alignment.TopStart)
-        ) {
-            Row(
-                modifier = modifier
-                    .width(70.dp)
-                    .height(32.dp)
-                    .clip(RoundedCornerShape(22.dp))
-                    .background(white.copy(alpha = 0.19f)),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_baseline_star_24),
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = modifier.size(20.dp)
-                )
-                Text(
-                    text = stars,
-                    fontSize = 14.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-
-    }
-}
-
-@Composable
-private fun MovieTitle(
-    title: String,
-    modifier: Modifier = Modifier
-) {
-    Text(
-        text = title,
-        color = Color.White,
-        fontSize = 12.sp,
-        fontWeight = FontWeight.SemiBold,
-        modifier = modifier.padding(12.dp),
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis
-    )
 }
 
 @Preview(showBackground = true)

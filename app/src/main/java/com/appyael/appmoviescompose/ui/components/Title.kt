@@ -1,5 +1,6 @@
 package com.appyael.appmoviescompose.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -14,7 +15,8 @@ import com.appyael.appmoviescompose.ui.theme.primary
 @Composable
 fun Title(
     modifier: Modifier = Modifier,
-    title:String = "Bienvenido"
+    title:String = "Bienvenido",
+    onClickProfile: () -> Unit
 ) {
     Text(
         modifier = modifier
@@ -23,7 +25,10 @@ fun Title(
                 top = 12.dp,
                 start = 24.dp,
                 end = 24.dp
-            ),
+            )
+            .clickable {
+                onClickProfile()
+            },
         text = title,
         fontSize = 18.sp,
         fontWeight = FontWeight.SemiBold,
